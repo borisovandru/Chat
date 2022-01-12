@@ -1,46 +1,55 @@
 package com.android.chat.domain.login
 
-import com.android.chat.core.TextMapper
-import com.android.chat.data.LoginRepository
+import com.android.chat.data.login.LoginRepository
+import com.android.chat.data.login.UserInitial
 import com.android.chat.ui.login.Auth
-import com.android.chat.ui.login.LoginWrapper
+import com.android.chat.ui.login.LoginEngine
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LoginInteractorTest {
 
+    private val mapper = Auth.AuthResultMapper.Base()
     private val exception = java.lang.IllegalStateException("error")
 
     @Test
-    fun test_success() = runBlocking {
+    fun test_login_success() = runBlocking {
         val repository = TestRepository()
-        val interactor = LoginInteractor.Base(repository)
+        val interactor = LoginInteractor.Base(repository, mapper)
         val actual = interactor.login(TestLoginWrapper(true))
         val expected = Auth.Base(HashMap<String, Any>().apply {
             put("bio", "test bio")
+            put("name", "test name")
+            put("login", "test login")
+            put("email", "test email")
+            put("avatar_url", "test avatar_url")
         })
         assertEquals(expected, actual)
-        val expectedString = "test bio"
-        assertEquals(expectedString, repository.saved)
+        val actualResult = repository.saved
+        val expectedResult = UserInitial(
+            "test name",
+            "test login",
+            "test email",
+            "test bio",
+            "test avatar_url"
+        )
+        assertEquals(expectedResult, actualResult)
     }
 
     @Test
-    fun test_fail() = runBlocking {
+    fun test_login_fail() = runBlocking {
         val repository = TestRepository()
-        val interactor = LoginInteractor.Base(repository)
+        val interactor = LoginInteractor.Base(repository, mapper)
         val actual = interactor.login(TestLoginWrapper(false))
         val expected = Auth.Fail(exception)
         assertEquals(expected, actual)
-        val expectedString = expected.map(TestTextMapper())
-        val actualString = actual.map(TestTextMapper())
-        assertEquals(expectedString, actualString)
     }
 
     @Test
     fun test_authorized() {
         val repository = TestRepository(true)
-        val interactor = LoginInteractor.Base(repository)
+        val interactor = LoginInteractor.Base(repository, mapper)
         val actual = interactor.authorized()
         val expected = true
         assertEquals(expected, actual)
@@ -49,28 +58,29 @@ class LoginInteractorTest {
     @Test
     fun test_not_authorized() {
         val repository = TestRepository(false)
-        val interactor = LoginInteractor.Base(repository)
+        val interactor = LoginInteractor.Base(repository, mapper)
         val actual = interactor.authorized()
         val expected = false
         assertEquals(expected, actual)
     }
 
-    private inner class TestTextMapper : TextMapper<String> {
-        override fun map(data: String) = data
-    }
-
     private inner class TestRepository(private val authorized: Boolean = false) : LoginRepository {
-        var saved: String = ""
-        override fun user() = if (authorized) Object() else null
-        override fun save(data: String) {
-            saved = data
+        var saved: UserInitial = UserInitial()
+        override suspend fun saveUser(user: UserInitial) {
+            saved = user
         }
+
+        override fun user() = if (authorized) Object() else null
     }
 
-    private inner class TestLoginWrapper(private val success: Boolean) : LoginWrapper {
+    private inner class TestLoginWrapper(private val success: Boolean) : LoginEngine {
         override suspend fun login() =
             if (success) Auth.Base(HashMap<String, Any>().apply {
                 put("bio", "test bio")
+                put("name", "test name")
+                put("login", "test login")
+                put("email", "test email")
+                put("avatar_url", "test avatar_url")
             }) else Auth.Fail(exception)
     }
 }

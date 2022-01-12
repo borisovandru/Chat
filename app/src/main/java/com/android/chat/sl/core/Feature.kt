@@ -2,5 +2,7 @@ package com.android.chat.sl.core
 
 enum class Feature {
     LOGIN,
-    MAIN
+    MAIN,
+    SEARCH,
+    MY_PROFILE
 }

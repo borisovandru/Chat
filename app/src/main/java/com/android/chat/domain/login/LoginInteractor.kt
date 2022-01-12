@@ -1,23 +1,34 @@
 package com.android.chat.domain.login
 
-import com.android.chat.core.SaveText
-import com.android.chat.data.LoginRepository
+import com.android.chat.data.login.LoginRepository
+import com.android.chat.data.login.UserInitial
 import com.android.chat.ui.login.Auth
-import com.android.chat.ui.login.LoginWrapper
+import com.android.chat.ui.login.LoginEngine
 
 interface LoginInteractor {
 
     fun authorized(): Boolean
 
-    suspend fun login(loginWrapper: LoginWrapper): Auth
+    suspend fun login(loginEngine: LoginEngine): Auth
+    suspend fun signIn(signIn: LoginEngine): Auth
 
-    class Base(private val repository: LoginRepository) : LoginInteractor {
+    class Base(
+        private val repository: LoginRepository,
+        private val mapper: Auth.AuthResultMapper<UserInitial>,
+    ) : LoginInteractor {
 
-        override suspend fun login(loginWrapper: LoginWrapper): Auth {
-            val result = loginWrapper.login()
-            if (result is Auth.Base)
-                result.map(SaveText(repository))
-            return result
+        override suspend fun login(loginEngine: LoginEngine): Auth = try {
+            val result = loginEngine.login()
+            repository.saveUser(result.map(mapper))
+            result
+        } catch (e: Exception) {
+            Auth.Fail(e)
+        }
+
+        override suspend fun signIn(signIn: LoginEngine): Auth = try {
+            signIn.login()
+        } catch (e: Exception) {
+            Auth.Fail(e)
         }
 
         override fun authorized() = repository.user() != null

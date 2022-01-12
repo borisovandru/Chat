@@ -1,7 +1,6 @@
 package com.android.chat.ui.login
 
 import androidx.lifecycle.viewModelScope
-import com.android.chat.core.TextMapper
 import com.android.chat.domain.login.LoginInteractor
 import com.android.chat.ui.core.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,24 +15,31 @@ class LoginViewModel(
     private val dispatchersMain: CoroutineDispatcher = Dispatchers.Main,
 ) : BaseViewModel<LoginCommunication, LoginUi>(communication) {
 
-    fun login(login: LoginWrapper) {
+    fun login(login: LoginEngine) {
         communication.map(LoginUi.Progress())
         viewModelScope.launch(dispatchersIO) {
             val result = interactor.login(login)
             val resultUi = if (result is Auth.Fail)
-                result.map(LoginUiFailed())
+                LoginUi.Failed(result.e.message ?: "")//todo improve it
             else
                 LoginUi.Success
             withContext(dispatchersMain) { communication.map(resultUi) }
         }
     }
 
-    fun init() {
-        val initialState = if (interactor.authorized()) LoginUi.Success else LoginUi.Initial()
-        communication.map(initialState)
-    }
-
-    private inner class LoginUiFailed : TextMapper<LoginUi.Failed> {
-        override fun map(data: String) = LoginUi.Failed(data)
+    fun init(signIn: LoginEngine) {
+        if (interactor.authorized()) {
+            communication.map(LoginUi.Progress())
+            viewModelScope.launch(dispatchersIO) {
+                val result = interactor.signIn(signIn)
+                val resultUi = if (result is Auth.Fail)
+                    LoginUi.Failed(result.e.message ?: "")//todo improve it
+                else
+                    LoginUi.Success
+                withContext(dispatchersMain) { communication.map(resultUi) }
+            }
+        } else {
+            communication.map(LoginUi.Initial())
+        }
     }
 }
