@@ -1,17 +1,16 @@
 package com.android.chat.data.profile
 
+import com.android.chat.data.login.UserInitial
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.android.chat.data.login.UserInitial
-import com.android.chat.sl.core.DATABASE_URL
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
+import com.android.chat.core.FirebaseDatabaseProvider
+
 
 interface MyProfileRepository {
 
@@ -19,12 +18,12 @@ interface MyProfileRepository {
 
     fun signOut()
 
-    class Base : MyProfileRepository {
+    class Base(private val firebaseDatabaseProvider: FirebaseDatabaseProvider) :
+        MyProfileRepository {
         override suspend fun profile(): MyProfileData {
-            val user = Firebase.database(DATABASE_URL).reference.root.child("users")
+            val user = firebaseDatabaseProvider.provideDatabase().child("users")
                 .child(Firebase.auth.currentUser!!.uid)
-            val userInitial = handleResult(user)
-            return MyProfileData.Base(userInitial)
+            return MyProfileData.Base(handleResult(user))
         }
 
         override fun signOut() = Firebase.auth.signOut()
@@ -36,9 +35,7 @@ interface MyProfileRepository {
                         cont.resume(snapshot.getValue(UserInitial::class.java)!!)
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        cont.resumeWithException(error.toException())
-                    }
+                    override fun onCancelled(error: DatabaseError) = Unit
                 })
             }
     }

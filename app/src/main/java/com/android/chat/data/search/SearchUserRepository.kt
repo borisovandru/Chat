@@ -1,37 +1,38 @@
 package com.android.chat.data.search
 
-import com.google.firebase.database.*
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import com.android.chat.data.login.UserInitial
-import com.android.chat.sl.core.DATABASE_URL
+import com.google.firebase.database.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
+import com.android.chat.core.FirebaseDatabaseProvider
 
 interface SearchUserRepository {
 
     suspend fun search(query: String): List<SearchData>
 
-    class Base : SearchUserRepository {
+    class Base(private val firebaseDatabaseProvider: FirebaseDatabaseProvider) :
+        SearchUserRepository {
 
         override suspend fun search(query: String): List<SearchData> {
-            val users =
-                Firebase.database(DATABASE_URL).reference.root.child("users").orderByChild("login")
-                    .equalTo(query)
-            return handleResult(users).map {
-                SearchData.Base(it.login,
-                    it.name,
-                    it.photoUrl
+            val users = firebaseDatabaseProvider.provideDatabase()
+                .child("users")
+                .orderByChild("login")
+                .equalTo(query)
+            return handleResult(users).map { (key, data) ->
+                SearchData.Base(
+                    key,
+                    data.name,
+                    data.photoUrl
                 )
             }
         }
 
         private suspend fun handleResult(users: Query) =
-            suspendCoroutine<List<UserInitial>> { cont ->
+            suspendCoroutine<List<Pair<String, UserInitial>>> { cont ->
                 users.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) =
                         snapshot.children.mapNotNull {
-                            it.getValue(UserInitial::class.java)//todo key as uid
+                            Pair(it.key!!, it.getValue(UserInitial::class.java)!!)
                         }.let { cont.resume(it) }
 
                     override fun onCancelled(error: DatabaseError) = Unit

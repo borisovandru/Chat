@@ -6,13 +6,14 @@ import com.android.chat.sl.core.BaseModule
 import com.android.chat.ui.login.Auth
 import com.android.chat.ui.login.LoginCommunication
 import com.android.chat.ui.login.LoginViewModel
+import com.android.chat.sl.core.CoreModule
 
-class LoginModule : BaseModule<LoginViewModel> {
+class LoginModule(private val coreModule: CoreModule) : BaseModule<LoginViewModel> {
 
     override fun viewModel() = LoginViewModel(
         LoginCommunication.Base(),
         LoginInteractor.Base(
-            LoginRepository.Base(),
+            LoginRepository.Base(coreModule.firebaseDatabaseProvider()),
             Auth.AuthResultMapper.Base()
         )
     )

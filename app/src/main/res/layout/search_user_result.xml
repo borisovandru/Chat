@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            tools:text="JohnnySC" />
+            tools:text="Andru" />
 
     </LinearLayout>
 
