@@ -4,5 +4,7 @@ enum class Feature {
     LOGIN,
     MAIN,
     SEARCH,
-    MY_PROFILE
+    MY_PROFILE,
+    CHATS,
+    CHAT
 }

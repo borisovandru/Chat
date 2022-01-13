@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.android.chat.R
 import com.android.chat.databinding.FragmentSearchBinding
 import com.android.chat.sl.core.Feature
+import com.android.chat.ui.core.ClickListener
 import com.android.chat.ui.main.BaseFragment
 
 class SearchFragment : BaseFragment<SearchViewModel>() {
@@ -29,7 +30,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchView.setOnQueryTextListener(SimpleQueryListener(viewModel))
-        val adapter = SearchUserAdapter()
+        val adapter = SearchUserAdapter(OpenChat())
         binding.recyclerView.adapter = adapter
         viewModel.observe(this) { it.map(adapter) }
         viewModel.init()
@@ -39,5 +40,9 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         super.onDestroyView()
         binding.searchView.setOnQueryTextListener(null)
         _binding = null
+    }
+
+    private inner class OpenChat : ClickListener<SearchUserUi> {
+        override fun click(item: SearchUserUi) = item.chat(viewModel)
     }
 }

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.android.chat.core.Match
 import com.android.chat.ui.core.BaseViewModel
+import com.android.chat.ui.core.AbstractView
 
 abstract class BaseFragment<T : BaseViewModel<*, *>> : Fragment(), Match<String> {
 
@@ -24,5 +25,11 @@ abstract class BaseFragment<T : BaseViewModel<*, *>> : Fragment(), Match<String>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requireActivity().setTitle(titleResId)
+        if (showBottomNavigation())
+            (requireActivity() as AbstractView).show()
+        else
+            (requireActivity() as AbstractView).hide()
     }
+
+    protected open fun showBottomNavigation() = true
 }

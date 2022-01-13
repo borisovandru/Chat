@@ -2,6 +2,8 @@ package com.android.chat.sl.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.android.chat.ui.chat.ChatViewModel
+import com.android.chat.ui.chats.ChatsViewModel
 import com.android.chat.ui.login.LoginViewModel
 import com.android.chat.ui.main.MainViewModel
 import com.android.chat.ui.profile.MyProfileViewModel
@@ -16,6 +18,8 @@ class ViewModelsFactory(
         put(MainViewModel::class.java, Feature.MAIN)
         put(SearchViewModel::class.java, Feature.SEARCH)
         put(MyProfileViewModel::class.java, Feature.MY_PROFILE)
+        put(ChatsViewModel::class.java, Feature.CHATS)
+        put(ChatViewModel::class.java, Feature.CHAT)
     }
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

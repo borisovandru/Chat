@@ -1,11 +1,11 @@
 package com.android.chat.sl
 
 import com.android.chat.sl.core.BaseModule
+import com.android.chat.sl.core.CoreModule
 import com.android.chat.ui.main.MainViewModel
-import com.android.chat.ui.main.NavigationCommunication
 
-class MainModule : BaseModule<MainViewModel> {
+class MainModule(private val coreModule: CoreModule) : BaseModule<MainViewModel> {
     override fun viewModel() = MainViewModel(
-        NavigationCommunication.Base()
+        coreModule.navigationCommunication()
     )
 }

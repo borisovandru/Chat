@@ -1,6 +1,9 @@
 package com.android.chat.ui.search
 
 import androidx.lifecycle.viewModelScope
+import com.android.chat.R
+import com.android.chat.ui.main.NavigationCommunication
+import com.android.chat.ui.main.NavigationUi
 import com.android.chat.data.search.SearchUserRepository
 import com.android.chat.ui.core.BaseViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,9 +15,10 @@ class SearchViewModel(
     searchCommunication: SearchCommunication,
     private val mapper: SearchResultsMapper,
     private val repository: SearchUserRepository,
+    private val navigation : NavigationCommunication,
     private val dispatchersIO: CoroutineDispatcher = Dispatchers.IO,
     private val dispatchersMain: CoroutineDispatcher = Dispatchers.Main,
-) : BaseViewModel<SearchCommunication, SearchUserListUi>(searchCommunication), Search {
+) : BaseViewModel<SearchCommunication, SearchUserListUi>(searchCommunication), Search, Chat {
 
     private val delay = Delay { query ->
         viewModelScope.launch(dispatchersIO) { find(query) }
@@ -33,6 +37,11 @@ class SearchViewModel(
             communication.map(SearchUserListUi.Base(listOf(SearchUserUi.Empty())))
             delay.add(query.lowercase())
         }
+    }
+
+    override fun startChatWith(userId: String) {
+        repository.save(userId)
+        navigation.map(NavigationUi(R.id.chat_screen))
     }
 
     private suspend fun find(query: String) {

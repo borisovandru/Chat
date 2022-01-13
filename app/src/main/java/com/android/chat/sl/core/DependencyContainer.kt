@@ -1,9 +1,6 @@
 package com.android.chat.sl.core
 
-import com.android.chat.sl.LoginModule
-import com.android.chat.sl.MainModule
-import com.android.chat.sl.MyProfileModule
-import com.android.chat.sl.SearchModule
+import com.android.chat.sl.*
 
 interface DependencyContainer {
     fun module(feature: Feature): BaseModule<*>
@@ -11,9 +8,11 @@ interface DependencyContainer {
 
         override fun module(feature: Feature) = when (feature) {
             Feature.LOGIN -> LoginModule(coreModule)
-            Feature.MAIN -> MainModule()
+            Feature.MAIN -> MainModule(coreModule)
             Feature.SEARCH -> SearchModule(coreModule)
             Feature.MY_PROFILE -> MyProfileModule(coreModule)
+            Feature.CHATS -> ChatsModule(coreModule)
+            Feature.CHAT -> ChatModule(coreModule)
             else -> throw IllegalStateException("unknown feature $feature")
         }
     }
