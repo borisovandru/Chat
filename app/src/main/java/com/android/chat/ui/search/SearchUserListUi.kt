@@ -19,7 +19,6 @@ interface SearchUserUi {
 
     fun map(
         avatar: AbstractView.Image,
-        userLogin: AbstractView.Text,
         userName: AbstractView.Text,
     ) = Unit
 
@@ -33,11 +32,9 @@ interface SearchUserUi {
 
         override fun map(
             avatar: AbstractView.Image,
-            userLogin: AbstractView.Text,
             userName: AbstractView.Text,
         ) {
             avatar.load(photoUrl)
-            userLogin.map(id)
             userName.map(name)
         }
     }

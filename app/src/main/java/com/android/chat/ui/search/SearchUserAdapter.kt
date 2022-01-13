@@ -64,7 +64,7 @@ abstract class SearchUserViewHolder(view: View) : RecyclerView.ViewHolder(view) 
 
         override fun bind(item: SearchUserUi) {
 
-            item.map(binding.avatarImageView, binding.userLoginTextView, binding.userNameTextView)
+            item.map(binding.avatarImageView, binding.userNameTextView)
             binding.chatButton.setOnClickListener { clickListener.click(item) }
         }
     }

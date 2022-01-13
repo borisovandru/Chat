@@ -1,9 +1,11 @@
-package com.android.chat.sl.core
+package com.android.chat.sl
 
 import com.android.chat.data.chat.BaseMessagesDataMapper
 import com.android.chat.data.chat.ChatRepository
 import com.android.chat.data.chat.UserId
 import com.android.chat.domain.chat.ChatInteractor
+import com.android.chat.sl.core.BaseModule
+import com.android.chat.sl.core.CoreModule
 import com.android.chat.ui.chat.BaseMessagesDomainToUiMapper
 import com.android.chat.ui.chat.ChatCommunication
 import com.android.chat.ui.chat.ChatViewModel
