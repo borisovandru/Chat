@@ -4,8 +4,9 @@ import com.android.chat.data.chat.ChatRepository
 import com.android.chat.data.chat.MessagesData
 import com.android.chat.data.chat.MessagesDataMapper
 import com.android.chat.ui.chat.MessagesRealtimeUpdateCallback
+import com.android.chat.ui.chat.ReadMessage
 
-interface ChatInteractor {
+interface ChatInteractor : ReadMessage {
 
     suspend fun send(message: String): Boolean
 
@@ -40,6 +41,8 @@ interface ChatInteractor {
             this.callback = callback
             repository.startGettingUpdates(dataCallback)
         }
+
+        override fun readMessage(id: String) = repository.readMessage(id)
     }
 }
 

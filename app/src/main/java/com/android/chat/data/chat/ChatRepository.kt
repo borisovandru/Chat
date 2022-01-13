@@ -9,11 +9,12 @@ import com.google.firebase.ktx.Firebase
 import com.android.chat.core.FirebaseDatabaseProvider
 import com.android.chat.core.Read
 import com.android.chat.domain.chat.MessagesDataRealtimeUpdateCallback
+import com.android.chat.ui.chat.ReadMessage
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-interface ChatRepository {
+interface ChatRepository : ReadMessage {
 
     suspend fun sendMessage(message: String): Boolean
     fun startGettingUpdates(dataCallback: MessagesDataRealtimeUpdateCallback)
@@ -34,7 +35,12 @@ interface ChatRepository {
         private val eventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val data =
-                    snapshot.children.mapNotNull { item -> item.getValue(MessageData.Base::class.java) }
+                    snapshot.children.mapNotNull { item ->
+                        Pair(
+                            item.key!!,
+                            item.getValue(MessageData.Base::class.java)!!
+                        )
+                    }
                 if (data.isNotEmpty())
                     callback.updateMessages(MessagesData.Success(data))
             }
@@ -61,6 +67,10 @@ interface ChatRepository {
         override fun stopGettingUpdates() {
             chatReference().removeEventListener(eventListener)
             callback = MessagesDataRealtimeUpdateCallback.Empty
+        }
+
+        override fun readMessage(id: String) {
+            chatReference().child(id).child("wasRead").setValue(true)
         }
 
         private fun chatReference() =

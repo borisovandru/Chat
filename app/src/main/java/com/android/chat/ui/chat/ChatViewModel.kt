@@ -13,14 +13,11 @@ class ChatViewModel(
     private val mapper: MessagesDomainToUiMapper<List<MessageUi>>,
     private val dispatchersIO: CoroutineDispatcher = Dispatchers.IO,
     private val dispatchersMain: CoroutineDispatcher = Dispatchers.Main,
-) : BaseViewModel<ChatCommunication, List<MessageUi>>(communication), TextMapper.Void {
+) : BaseViewModel<ChatCommunication, List<MessageUi>>(communication), TextMapper.Void, ReadMessage {
 
     private var incomeMessages: List<MessageUi> = ArrayList()
     private val myMessagesWaitList = ArrayList<MessageUi>()
 
-    /**
-     * try to send one more time
-     */
     override fun map(data: String) {
         myMessagesWaitList.remove(MessageUi.Mine(data, MyMessageUiState.FAILED))
         send(data)
@@ -68,6 +65,10 @@ class ChatViewModel(
 
     fun stopGettingUpdates() {
         interactor.stopGettingUpdates()
+    }
+
+    override fun readMessage(id: String) {
+        viewModelScope.launch(dispatchersIO) { interactor.readMessage(id) }
     }
 }
 

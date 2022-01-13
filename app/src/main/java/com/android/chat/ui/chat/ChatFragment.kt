@@ -34,7 +34,7 @@ class ChatFragment : BaseFragment<ChatViewModel>() {
             viewModel.send(binding.messageEditText.text.toString())
             binding.messageEditText.text?.clear()
         }
-        val adapter = ChatAdapter(Retry())
+        val adapter = ChatAdapter(Retry(), ReadMessage())
         binding.recyclerView.adapter = adapter
         viewModel.observe(this) {
             adapter.map(it)
@@ -58,6 +58,14 @@ class ChatFragment : BaseFragment<ChatViewModel>() {
     }
 
     private inner class Retry : ClickListener<MessageUi> {
-        override fun click(item: MessageUi) { item.map(viewModel) }
+        override fun click(item: MessageUi) {
+            item.map(viewModel)
+        }
+    }
+
+    private inner class ReadMessage : ClickListener<MessageUi> {
+        override fun click(item: MessageUi) {
+            item.read(viewModel)
+        }
     }
 }
