@@ -1,0 +1,41 @@
+package com.android.chat.ui.chat
+
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import com.android.chat.R
+import com.android.chat.ui.core.AbstractView
+
+class MyMessageView : androidx.appcompat.widget.AppCompatImageView, MessageState {
+    //region constructors
+    constructor(context: Context) : super(context)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    )
+    //endregion
+
+    override fun show(state: MyMessageUiState) {
+        val imageResId = when (state) {
+            MyMessageUiState.SENT -> R.drawable.ic_done_black_24
+            MyMessageUiState.FAILED -> R.drawable.ic_replay_black_24
+            MyMessageUiState.READ -> R.drawable.ic_double_check_black_24
+            else -> 0
+        }
+        setImageResource(imageResId)
+    }
+
+    override fun show() {
+        visibility = View.VISIBLE
+    }
+
+    override fun hide() {
+        visibility = View.GONE
+    }
+}
+
+interface MessageState : AbstractView {
+    fun show(state: MyMessageUiState)
+}

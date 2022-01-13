@@ -6,10 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.android.chat.R
 import com.android.chat.core.Abstract
-import com.android.chat.ui.core.CustomImageView
-import com.android.chat.ui.core.CustomTextView
+import com.android.chat.databinding.SearchUserResultBinding
+import com.android.chat.ui.core.ClickListener
 
-class SearchUserAdapter : RecyclerView.Adapter<SearchUserViewHolder>(),
+class SearchUserAdapter(
+    private val clickListener: ClickListener<SearchUserUi>
+) : RecyclerView.Adapter<SearchUserViewHolder>(),
     Abstract.Mapper.Data<List<SearchUserUi>, Unit> {
 
     private val list = ArrayList<SearchUserUi>()
@@ -23,7 +25,13 @@ class SearchUserAdapter : RecyclerView.Adapter<SearchUserViewHolder>(),
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = when (viewType) {
-        0 -> SearchUserViewHolder.Base(R.layout.search_user_result.view(parent))
+        0 -> SearchUserViewHolder.Base(
+            SearchUserResultBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ), clickListener
+        )
         1 -> SearchUserViewHolder.Progress(R.layout.progress.view(parent))
         2 -> SearchUserViewHolder.NoResults(R.layout.no_results.view(parent))
         3 -> SearchUserViewHolder.Initial(R.layout.search.view(parent))
@@ -49,13 +57,15 @@ abstract class SearchUserViewHolder(view: View) : RecyclerView.ViewHolder(view) 
 
     open fun bind(item: SearchUserUi) = Unit
 
-    class Base(view: View) : SearchUserViewHolder(view) {//todo clicklistener
+    class Base(
+        private val binding: SearchUserResultBinding,
+        private val clickListener: ClickListener<SearchUserUi>
+    ) : SearchUserViewHolder(binding.root) {
 
-        private val avatar = itemView.findViewById<CustomImageView>(R.id.avatarImageView)
-        private val userName = itemView.findViewById<CustomTextView>(R.id.userNameTextView)
-        private val userLogin = itemView.findViewById<CustomTextView>(R.id.userLoginTextView)
         override fun bind(item: SearchUserUi) {
-            item.map(avatar, userLogin, userName)
+
+            item.map(binding.avatarImageView, binding.userLoginTextView, binding.userNameTextView)
+            binding.chatButton.setOnClickListener { clickListener.click(item) }
         }
     }
 

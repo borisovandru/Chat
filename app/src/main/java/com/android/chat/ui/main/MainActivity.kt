@@ -6,12 +6,16 @@ import androidx.fragment.app.FragmentManager
 import com.android.chat.R
 import com.android.chat.databinding.ActivityMainBinding
 import com.android.chat.ui.core.BaseActivity
+import com.android.chat.ui.core.AbstractView
+import android.view.View
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(), AbstractView {
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val viewModel = viewModel(MainViewModel::class.java, this)
@@ -23,7 +27,8 @@ class MainActivity : BaseActivity() {
 
         viewModel.observe(this) {
             binding.bottomNavView.setOnItemSelectedListener(null)
-            binding.bottomNavView.selectedItemId = it.id
+            if (it.id != R.id.chat_screen)//todo make better
+                binding.bottomNavView.selectedItemId = it.id
             val fragment = viewModel.getFragment(it.id)
             if (supportFragmentManager.canReplace(fragment))
                 supportFragmentManager.beginTransaction()
@@ -32,6 +37,13 @@ class MainActivity : BaseActivity() {
             binding.bottomNavView.setOnItemSelectedListener(listener)
         }
         viewModel.init()
+    }
+    override fun show() {
+        binding.bottomNavView.visibility = View.VISIBLE
+    }
+
+    override fun hide() {
+        binding.bottomNavView.visibility = View.GONE
     }
 }
 

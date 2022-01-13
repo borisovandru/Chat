@@ -1,17 +1,25 @@
 package com.android.chat.data.search
 
+import android.content.SharedPreferences
+import com.android.chat.core.Save
 import com.android.chat.data.login.UserInitial
 import com.google.firebase.database.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 import com.android.chat.core.FirebaseDatabaseProvider
 
-interface SearchUserRepository {
+interface SearchUserRepository : Save<String> {
 
     suspend fun search(query: String): List<SearchData>
 
-    class Base(private val firebaseDatabaseProvider: FirebaseDatabaseProvider) :
+    class Base
+        (
+        private val firebaseDatabaseProvider: FirebaseDatabaseProvider,
+        private val userIdContainer: Save<String>
+    ) :
         SearchUserRepository {
+
+        override fun save(data: String) = userIdContainer.save(data)
 
         override suspend fun search(query: String): List<SearchData> {
             val users = firebaseDatabaseProvider.provideDatabase()
