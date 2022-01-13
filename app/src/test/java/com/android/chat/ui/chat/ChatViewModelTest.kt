@@ -160,7 +160,7 @@ class ChatViewModelTest {
         private val list = ArrayList<MessageDomain>()
         override suspend fun send(message: String): Boolean {
             if (success) {
-                list.add(MessageDomain.MyMessageDomain(message))
+                list.add(MessageDomain.MyMessageDomain(message, false))
                 callback.updateMessages(MessagesDomain.Success(list))
             }
             return success
@@ -174,5 +174,6 @@ class ChatViewModelTest {
             this.callback = callback
         }
 
+        override fun readMessage(id: String) = Unit
     }
 }
