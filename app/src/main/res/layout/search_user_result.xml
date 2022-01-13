@@ -16,28 +16,14 @@
         android:layout_width="@dimen/margin_16"
         android:layout_height="match_parent" />
 
-    <LinearLayout
+    <com.android.chat.ui.core.CustomTextView
+        android:id="@+id/userNameTextView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <com.android.chat.ui.core.CustomTextView
-            android:id="@+id/userNameTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="Andru" />
-
-        <com.android.chat.ui.core.CustomTextView
-            android:id="@+id/userLoginTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            tools:text="Andru" />
-
-    </LinearLayout>
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        tools:text="Andru" />
 
     <ImageButton
         android:id="@+id/chatButton"

@@ -16,10 +16,13 @@
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable/ic_search_black_24.xml" value="0.175" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable/ic_send_black_24.xml" value="0.2" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable/my_message_bubble.xml" value="0.2" />
+        <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable/unread_messages_circle.xml" value="0.16" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable/user_message_bubble.xml" value="0.2" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/activity_login.xml" value="0.10925925925925926" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/chat_layout.xml" value="0.12129629629629629" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
+        <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/fragment_chats.xml" value="0.12129629629629629" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/fragment_my_profile.xml" value="0.1" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/fragment_search.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/my_message_layout.xml" value="0.14814814814814814" />
@@ -27,7 +30,7 @@
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/progress.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/search.xml" value="0.13240740740740742" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/search_user_result.xml" value="0.18" />
-        <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/user_message_layout.xml" value="0.18211752786220872" />
+        <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/layout/user_message_layout.xml" value="0.25" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/menu/main_bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>

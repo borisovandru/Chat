@@ -25,8 +25,10 @@ interface ChatRepository : ReadMessage {
         private val userIdContainer: Read<String>
     ) : ChatRepository {
 
+        private val myUid = Firebase.auth.currentUser!!.uid
+        private val userId by lazy { userIdContainer.read() }
         private val chatId by lazy {
-            ChatId(Firebase.auth.currentUser!!.uid, userIdContainer.read()).value()
+            ChatId(Pair(myUid, userId)).value()
         }
 
         private var callback: MessagesDataRealtimeUpdateCallback =
@@ -34,13 +36,9 @@ interface ChatRepository : ReadMessage {
 
         private val eventListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val data =
-                    snapshot.children.mapNotNull { item ->
-                        Pair(
-                            item.key!!,
-                            item.getValue(MessageData.Base::class.java)!!
-                        )
-                    }
+                val data = snapshot.children.mapNotNull { item ->
+                    Pair(item.key!!, item.getValue(MessageData.Base::class.java)!!)
+                }
                 if (data.isNotEmpty())
                     callback.updateMessages(MessagesData.Success(data))
             }
