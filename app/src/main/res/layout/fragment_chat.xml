@@ -23,7 +23,9 @@
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:minHeight="48dp"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <ImageButton
             android:id="@+id/sendMessageButton"
@@ -31,7 +33,7 @@
             android:layout_height="@dimen/button_size"
             android:background="?selectableItemBackground"
             android:src="@drawable/ic_send_black_24"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

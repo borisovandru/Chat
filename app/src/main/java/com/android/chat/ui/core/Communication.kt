@@ -18,9 +18,7 @@ interface Communication<T> : Observe<T>, Abstract.Mapper.Data<T, Unit> {
     }
 
     class Empty : Communication<Abstract.UiObject.Empty> {
-        override fun observe(owner: LifecycleOwner, observer: Observer<Abstract.UiObject.Empty>) =
-            Unit
-
+        override fun observe(owner: LifecycleOwner, observer: Observer<Abstract.UiObject.Empty>) = Unit
         override fun map(data: Abstract.UiObject.Empty) = Unit
     }
 }

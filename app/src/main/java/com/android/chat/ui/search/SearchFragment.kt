@@ -30,7 +30,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.searchView.setOnQueryTextListener(SimpleQueryListener(viewModel))
-        val adapter = SearchUserAdapter(OpenChat())
+        val adapter = SearchAdapter(OpenChat())
         binding.recyclerView.adapter = adapter
         viewModel.observe(this) { it.map(adapter) }
         viewModel.init()
@@ -42,7 +42,7 @@ class SearchFragment : BaseFragment<SearchViewModel>() {
         _binding = null
     }
 
-    private inner class OpenChat : ClickListener<SearchUserUi> {
-        override fun click(item: SearchUserUi) = item.chat(viewModel)
+    private inner class OpenChat : ClickListener<SearchResultUi> {
+        override fun click(item: SearchResultUi) = item.chat(viewModel)
     }
 }

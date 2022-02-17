@@ -6,5 +6,6 @@ enum class Feature {
     SEARCH,
     MY_PROFILE,
     CHATS,
-    CHAT
+    CHAT,
+    CREATE_GROUP
 }

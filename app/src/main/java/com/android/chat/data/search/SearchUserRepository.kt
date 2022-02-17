@@ -18,8 +18,7 @@ interface SearchUserRepository : Save<String> {
     class Base(
         private val firebaseDatabaseProvider: FirebaseDatabaseProvider,
         private val userIdContainer: Save<String>
-    ) :
-        SearchUserRepository {
+    ) : SearchUserRepository {
 
         override fun save(data: String) = userIdContainer.save(data)
 
@@ -29,7 +28,7 @@ interface SearchUserRepository : Save<String> {
                 .orderByChild("login")
                 .equalTo(query)
             return handleResult(users).map { (key, data) ->
-                SearchData.Base(
+                SearchData.User(
                     key,
                     if (data.name.isEmpty()) data.login else data.name,
                     data.photoUrl
