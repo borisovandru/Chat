@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.android.chat.R
 import com.android.chat.databinding.FragmentMyProfileBinding
 import com.android.chat.sl.core.Feature
@@ -33,7 +34,16 @@ class MyProfileFragment : BaseFragment<MyProfileViewModel>() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.observe(this) {
-            it.map(binding.nameTextview, binding.loginTextView, binding.avatarImageView)
+            it.map(
+                binding.nameTextview,
+                binding.loginTextView,
+                binding.avatarImageView,
+                binding.createGroupButton
+            )
+        }
+
+        binding.createGroupButton.setOnClickListener {
+            viewModel.createGroup()
         }
 
         binding.signOutButton.setOnClickListener {

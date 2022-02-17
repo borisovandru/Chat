@@ -2,12 +2,12 @@ package com.android.chat.ui.main
 
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import androidx.fragment.app.FragmentManager
 import com.android.chat.R
 import com.android.chat.databinding.ActivityMainBinding
-import com.android.chat.ui.core.BaseActivity
 import com.android.chat.ui.core.AbstractView
-import android.view.View
+import com.android.chat.ui.core.BaseActivity
 
 class MainActivity : BaseActivity(), AbstractView {
 
@@ -27,14 +27,14 @@ class MainActivity : BaseActivity(), AbstractView {
 
         viewModel.observe(this) {
             binding.bottomNavView.setOnItemSelectedListener(null)
-            val isChatScreen = it.id == R.id.chat_screen
-            if (!isChatScreen)//todo make better
-                binding.bottomNavView.selectedItemId = it.id
-            val fragment = viewModel.getFragment(it.id)
+            val isBaseLevel = it.isBaseLevel()
+            if (isBaseLevel)
+                binding.bottomNavView.selectedItemId = it.data()
+            val fragment = viewModel.getFragment(it.data())
             if (supportFragmentManager.canReplace(fragment)) {
                 val transaction = supportFragmentManager.beginTransaction()
                     .replace(R.id.container, fragment)
-                if (isChatScreen)
+                if (!isBaseLevel)
                     transaction.addToBackStack(fragment.name())
                 transaction.commit()
             }

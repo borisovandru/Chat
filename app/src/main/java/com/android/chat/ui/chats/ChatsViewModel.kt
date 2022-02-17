@@ -49,7 +49,11 @@ class ChatsViewModel(
 
     override fun startChatWith(userId: String) {
         interactor.save(userId)
-        navigation.map(NavigationUi(R.id.chat_screen))
+        navigation.map(NavigationUi.BaseLevel(R.id.chat_screen))
+    }
+
+    override fun startGroupChat(groupId: String) {
+        TODO("Not yet implemented")
     }
 
     fun startGettingUpdates() {

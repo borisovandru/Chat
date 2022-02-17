@@ -22,4 +22,5 @@ class CustomButton : androidx.appcompat.widget.AppCompatButton, AbstractView {
     override fun hide() {
         visibility = View.GONE
     }
+
 }

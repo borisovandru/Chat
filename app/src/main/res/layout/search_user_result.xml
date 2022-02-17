@@ -32,6 +32,6 @@
         android:background="?selectableItemBackground"
         android:padding="@dimen/margin_16"
         android:src="@drawable/ic_chat_black_24"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription,SpeakableTextPresentCheck" />
 
 </LinearLayout>

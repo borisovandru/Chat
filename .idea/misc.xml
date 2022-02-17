@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/chat_layout.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/fragment_chat.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/fragment_chats.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/fragment_create_group.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/fragment_my_profile.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/my_group_layout.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/my_message_layout.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/no_results.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/progress.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/search.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/search_group_result.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/search_user_result.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/layout/user_message_layout.xml" value="0.1" />
+        <entry key="..\:/Users/boris/AndroidStudioProjects/Chat/app/src/main/res/menu/main_bottom_nav_menu.xml" value="0.1" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.175" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable-v24/ic_profile_black_24dp.xml" value="0.13" />
         <entry key="..\:/Users/boris/GeekBrains/KOTLIN/Chat/app/src/main/res/drawable-v24/ic_search_black_24.xml" value="0.175" />

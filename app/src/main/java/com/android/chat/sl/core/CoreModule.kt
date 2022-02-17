@@ -9,7 +9,7 @@ interface CoreModule {
 
     fun provideSharedPreferences(): SharedPreferences
     fun firebaseDatabaseProvider(): FirebaseDatabaseProvider
-    fun navigationCommunication(): NavigationCommunication
+    fun navigationCommunication() : NavigationCommunication
 
     class Base(private val context: Context) : CoreModule {
         private val firebaseDatabaseProvider = FirebaseDatabaseProvider.Base()
